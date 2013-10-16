@@ -1,12 +1,12 @@
 module Capistrano
-  module Nginx
+  module Uwsgi
     module Generators
       class ConfigGenerator < Rails::Generators::Base
-        desc "Create local nginx configuration file for customization"
+        desc 'Create local uwsgi configuration file for customization'
         source_root File.expand_path('../templates', __FILE__)
 
         def copy_template
-          copy_file "_nginx_conf.erb", "config/deploy/nginx_conf.erb"
+          copy_file '_uwsgi_conf.erb', 'config/uwsgi.ini.erb'
         end
       end
     end

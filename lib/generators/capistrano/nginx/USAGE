@@ -1,3 +1,0 @@
-To create local nginx configuration file call
-
-    rails generate capistrano:nginx:config

@@ -1,0 +1,3 @@
+To create local uwsgi configuration file call
+
+    rails generate capistrano:uwsgi:config
