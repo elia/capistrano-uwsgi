@@ -3,10 +3,10 @@
 
 This gem provides two capistrano tasks:
 
-* `uwsgi:setup` -- creates `/etc/uwsgi/apps-enabled/YOUR_APP` and links it to /etc/uwsgi/sites-enabled/YOUR\_APP
-* `uwsgi:restart` -- touches ``
+* `uwsgi:setup` - creates `/etc/uwsgi/apps-enabled/#{application}-#{stage}.ini`
+* `uwsgi:restart` - touches `uwsgi_ini` (see below)
 
-And uwsgi configuration file generator, that will create local copy of default uwsgi config for customization.
+And uWSGI configuration file generator, that will create local copy of default uWSGI config for customization.
 
 ## Installation
 
@@ -38,7 +38,7 @@ Make sure, following variables are defined in your `config/deploy.rb`:
 * `deploy_to` - deployment path
 * `uwsgi_mode` - can be either `:standalone` or `:emperor`
 * `app_port` - application port (required by the `:standalone` mode)
-* `rvm_path` - set this var to enable rvm usage inside uwsgi (optional)
+* `rvm_path` - set this var to enable rvm usage inside uWSGI (optional)
 * `uwsgi_ini` - the path of the _compiled_ uwsgi.ini config file (optional, defaults to: `/etc/uwsgi/apps-enabled/#{application}-#{stage}.ini`)
 
 Launch new tasks:
@@ -50,7 +50,7 @@ Or you can add hook to call this tasks after `deploy:setup`. Add to your `config
 
     after 'deploy:setup', 'uwsgi:setup', 'uwsgi:restart'
 
-If you want to customize uwsgi configuration, just generate local uwsgi config before running `uwsgi:setup`:
+If you want to customize uWSGI configuration, just generate local uWSGI config before running `uwsgi:setup`:
 
     $ rails generate capistrano:uwsgi:config
 
