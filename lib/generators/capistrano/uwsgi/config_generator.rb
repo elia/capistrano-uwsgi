@@ -6,7 +6,7 @@ module Capistrano
         source_root File.expand_path('../templates', __FILE__)
 
         def copy_template
-          copy_file '_uwsgi_conf.erb', 'config/uwsgi.ini.erb'
+          copy_file '_uwsgi_conf.ini.erb', 'config/uwsgi.ini.erb'
         end
       end
     end

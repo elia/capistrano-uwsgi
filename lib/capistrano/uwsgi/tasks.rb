@@ -1,4 +1,6 @@
 Capistrano::Configuration.instance.load do
+  set(:uwsgi_ini) { "/etc/uwsgi/apps-enabled/#{application}-#{stage}.ini" }
+
   namespace :uwsgi do
     desc 'Setup application in uwsgi'
     task :setup, :role => :web do

@@ -3,8 +3,8 @@
 
 This gem provides two capistrano tasks:
 
-* `uwsgi:setup` -- creates /etc/uwsgi/sites-available/YOUR\_APP and links it to /etc/uwsgi/sites-enabled/YOUR\_APP
-* `uwsgi:reload` -- invokes `/etc/init.d/uwsgi reload` on server
+* `uwsgi:setup` -- creates `/etc/uwsgi/apps-enabled/YOUR_APP` and links it to /etc/uwsgi/sites-enabled/YOUR\_APP
+* `uwsgi:restart` -- touches ``
 
 And uwsgi configuration file generator, that will create local copy of default uwsgi config for customization.
 
@@ -31,19 +31,24 @@ Add this to your `config/deploy.rb` file:
 Make sure, following variables are defined in your `config/deploy.rb`:
 
 * `application` - application name
-* `server_name` - your application's server_name in uwsgi (e.g. `example.com`)
+* `stage` - the stage (usually from `capistrano/ext/multistage`)
+* `user` - remote user name
+* `group` - remote group name
+* `rack_env` - RACK_ENV used to run the app
 * `deploy_to` - deployment path
-* `sudo_user` - user name with sudo privileges (needed to config/restart uwsgi)
-* `app_port` - application port (optional)
+* `uwsgi_mode` - can be either `:standalone` or `:emperor`
+* `app_port` - application port (required by the `:standalone` mode)
+* `rvm_path` - set this var to enable rvm usage inside uwsgi (optional)
+* `uwsgi_ini` - the path of the _compiled_ uwsgi.ini config file (optional, defaults to: `/etc/uwsgi/apps-enabled/#{application}-#{stage}.ini`)
 
 Launch new tasks:
 
     $ cap uwsgi:setup
-    $ cap uwsgi:reload
+    $ cap uwsgi:restart
 
 Or you can add hook to call this tasks after `deploy:setup`. Add to your `config/deploy.rb`:
 
-    after "deploy:setup", "uwsgi:setup", "uwsgi:reload"
+    after 'deploy:setup', 'uwsgi:setup', 'uwsgi:restart'
 
 If you want to customize uwsgi configuration, just generate local uwsgi config before running `uwsgi:setup`:
 

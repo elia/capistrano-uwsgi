@@ -1,10 +1,9 @@
 [uwsgi]
-stage            = <%= stage %>
 deploy_to        = <%= deploy_to %>
 app_name         = <%= application %>
 uid              = <%= user %>
 gid              = <%= group %>
-env              = RACK_ENV=%(rails_env)
+env              = RACK_ENV=<%= rails_env %>
 
 ; Generic config
 chdir            = %(deploy_to)/current
@@ -38,7 +37,7 @@ rbrequire        = bundler/setup
 
 ; RVM
 <% if fetch(:rvm_path, nil) %>
-rvm-path         = <%= if rvm_path %>
+rvm-path         = <%= rvm_path %>
 <% end %>
 
 ; Memory management

@@ -10,6 +10,6 @@ class GeneratorTest < Rails::Generators::TestCase
 
   def test_generates_local_config_file
     run_generator
-    assert_file 'config/deploy/uwsgi_conf.erb'
+    assert_file 'config/uwsgi.ini.erb'
   end
 end
